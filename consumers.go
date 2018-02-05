@@ -15,7 +15,7 @@ func ConsumeSummonerInfo(body []byte) error {
 		return errors.Wrap(err, "Error in ConsumeSummonerInfo")
 	}
 
-	err = mongo.UpdateSummoner(summonerInfo)
+	err = mongo.UpdateSummoner(&summonerInfo)
 	if err != nil {
 		return errors.Wrap(err, "Error in ConsumeSummonerInfo")
 	}

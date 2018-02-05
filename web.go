@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"net/http"
 
@@ -12,6 +13,7 @@ import (
 
 func StartWeb() {
 	router := NewRouter()
+	fmt.Printf("Now listening on port: %v", util.GetConfigValue("dataApiPort"))
 	log.Fatal(http.ListenAndServe(util.GetConfigValue("dataApiPort"), router))
 }
 

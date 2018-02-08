@@ -13,7 +13,7 @@ import (
 
 func StartWeb() {
 	router := NewRouter()
-	fmt.Printf("Now listening on port: %v", util.GetConfigValue("dataApiPort"))
+	fmt.Println("Now listening on port: " + util.GetConfigValue("dataApiPort"))
 	log.Fatal(http.ListenAndServe(util.GetConfigValue("dataApiPort"), router))
 }
 

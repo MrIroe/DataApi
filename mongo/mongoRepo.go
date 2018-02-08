@@ -16,6 +16,7 @@ var primarySess *mgo.Session
 
 const entityDbName = "Entities"
 const summonerColName = "Summoners"
+const summonerStatsColName = "SummonerStats"
 
 func InitMongoRepo() {
 	var err error
@@ -36,6 +37,19 @@ func UpdateSummoner(summoner *obj.SummonerDTO) error {
 	_, err := c.Upsert(bson.M{"AccountId": summoner.AccountId}, &summoner)
 	if err != nil {
 		return errors.Wrap(err, "Error updating summoner:"+summoner.Name)
+	}
+
+	return nil
+}
+
+func UpdateSummonerStats(summonerStats *obj.SummonerMatchStats) error {
+	localSess := *primarySess.Clone()
+	defer localSess.Close()
+	c := localSess.DB(entityDbName).C(summonerStatsColName)
+
+	_, err := c.Upsert(bson.M{"AccountId": summonerStats.AccountId}, &summonerStats)
+	if err != nil {
+		return errors.Wrap(err, "Error updating summoner stats")
 	}
 
 	return nil

@@ -22,3 +22,13 @@ func ConsumeSummonerInfo(body []byte) error {
 
 	return nil
 }
+
+func ConsumeSummonerStats(body []byte) error {
+	var summonerStats obj.SummonerMatchStats
+	err := json.Unmarshal(body, &summonerStats)
+	if err != nil {
+		return errors.Wrap(err, "Error in ConsumeSummonerStats")
+	}
+
+	err = mongo.UpdateSummonerStats(&summonerStats)
+}

@@ -31,4 +31,24 @@ func ConsumeSummonerStats(body []byte) error {
 	}
 
 	err = mongo.UpdateSummonerStats(&summonerStats)
+	if err != nil {
+		return errors.Wrap(err, "Error in ConsumeSummonerStats")
+	}
+
+	return nil
+}
+
+func ConsumeMatchReference(body []byte) error {
+	var matchRefData obj.MatchReferenceData
+	err := json.Unmarshal(body, &matchRefData)
+	if err != nil {
+		return errors.Wrap(err, "Error unmarshalling ConsumeMatchReference")
+	}
+
+	err = mongo.UpdateMatchReference(&matchRefData)
+	if err != nil {
+		return errors.Wrap(err, "Error in ConsumeMatchReference")
+	}
+
+	return nil
 }

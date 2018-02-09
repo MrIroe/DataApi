@@ -12,5 +12,6 @@ func main() {
 	go StartWeb()
 	go util.RegisterConsumer("dataApi/summoner", ConsumeSummonerInfo)
 	go util.RegisterConsumer("dataApi/summonerStats", ConsumeSummonerStats)
+	go util.RegisterConsumer("dataApi/matchReferenceData", ConsumeMatchReference)
 	<-forever
 }

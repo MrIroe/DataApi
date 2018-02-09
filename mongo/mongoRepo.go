@@ -17,6 +17,7 @@ var primarySess *mgo.Session
 const entityDbName = "Entities"
 const summonerColName = "Summoners"
 const summonerStatsColName = "SummonerStats"
+const matchRefColName = "MatchReferences"
 
 func InitMongoRepo() {
 	var err error
@@ -47,9 +48,22 @@ func UpdateSummonerStats(summonerStats *obj.SummonerMatchStats) error {
 	defer localSess.Close()
 	c := localSess.DB(entityDbName).C(summonerStatsColName)
 
-	_, err := c.Upsert(bson.M{"AccountId": summonerStats.AccountId}, &summonerStats)
+	_, err := c.Upsert(bson.M{"AccountId": summonerStats.AccountId, "$and": bson.M{"MatchId": summonerStats.MatchId}}, &summonerStats)
 	if err != nil {
 		return errors.Wrap(err, "Error updating summoner stats")
+	}
+
+	return nil
+}
+
+func UpdateMatchReference(matchReference *obj.MatchReferenceData) error {
+	localSess := *primarySess.Clone()
+	defer localSess.Close()
+	c := localSess.DB(entityDbName).C(matchRefColName)
+
+	_, err := c.Upsert(bson.M{"AccountId": matchReference.AccountId, "$and": bson.M{"MatchId": matchReference.MatchId}}, &matchReference)
+	if err != nil {
+		return errors.Wrap(err, "Error updating match reference")
 	}
 
 	return nil

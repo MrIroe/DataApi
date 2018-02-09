@@ -166,3 +166,16 @@ type MasteryDto struct {
 	MasteryId int `json:"masteryId"`
 	Rank      int `json:"rank"`
 }
+
+type MatchReferenceData struct {
+	AccountId  int64  `json:"accountId" bson:"AccountId"`
+	Lane       string `json:"lane" bson:"Lane"`
+	Champion   int    `json:"champion" bson:"Champion"`
+	PlatformId string `json:"platformId" bson:"PlatformId`
+	Timestamp  int64  `json:"timestamp" bson:"Timestamp"` // Epoch milliseconds
+	Region     string `json:"region" bson:"Region"`
+	MatchId    int64  `json:"matchId" bson:"MatchId"`
+	Queue      int    `json:"queue" bson:"Queue"`
+	Role       string `json:"role" bson:"Role"`
+	Season     int    `json:"season" bson:"Season"`
+}

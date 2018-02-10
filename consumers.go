@@ -4,6 +4,7 @@ import (
 	mongo "dataApi/mongo"
 	obj "dataApi/objects"
 	"encoding/json"
+	"fmt"
 
 	"github.com/pkg/errors"
 )
@@ -48,6 +49,23 @@ func ConsumeMatchReference(body []byte) error {
 	err = mongo.UpdateMatchReference(&matchRefData)
 	if err != nil {
 		return errors.Wrap(err, "Error in ConsumeMatchReference")
+	}
+
+	return nil
+}
+
+func ConsumeChampionData(body []byte) error {
+	var championData []obj.ChampionData
+	err := json.Unmarshal(body, &championData)
+	if err != nil {
+		return errors.Wrap(err, "Error unmarshalling to champion data")
+	}
+
+	for i := range championData {
+		err = mongo.UpdateChampionData(championData[i])
+		if err != nil {
+			fmt.Printf("Error updating championId:%v Original Err: %v", championData[i].Id, err)
+		}
 	}
 
 	return nil

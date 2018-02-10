@@ -18,6 +18,7 @@ const entityDbName = "Entities"
 const summonerColName = "Summoners"
 const summonerStatsColName = "SummonerStats"
 const matchRefColName = "MatchReferences"
+const championColName = "Champions"
 
 func InitMongoRepo() {
 	var err error
@@ -95,4 +96,17 @@ func GetSummonerInfoAcc(accountId int64) ([]obj.SummonerDTO, error) {
 	}
 
 	return summonerInfo, nil
+}
+
+func UpdateChampionData(data obj.ChampionData) error {
+	localSess := *primarySess.Clone()
+	defer localSess.Close()
+	c := localSess.DB(entityDbName).C(championColName)
+
+	_, err := c.Upsert(bson.M{"Id": data.Id}, &data)
+	if err != nil {
+		return errors.Wrap(err, "Error updating champion data")
+	}
+
+	return nil
 }

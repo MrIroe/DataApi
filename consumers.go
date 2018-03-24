@@ -55,18 +55,26 @@ func ConsumeMatchReference(body []byte) error {
 }
 
 func ConsumeChampionData(body []byte) error {
-	var championData []obj.ChampionData
+	var championData obj.ChampionData
 	err := json.Unmarshal(body, &championData)
 	if err != nil {
 		return errors.Wrap(err, "Error unmarshalling to champion data")
 	}
 
-	for i := range championData {
-		err = mongo.UpdateChampionData(championData[i])
+	for key, value := range championData.Data {
+		fmt.Printf("ChampionKey:%v", key)
+		err = mongo.UpdateChampionData(value)
 		if err != nil {
-			fmt.Printf("Error updating championId:%v Original Err: %v", championData[i].Id, err)
+			fmt.Printf("Error updating championId:%v, championKey: %v, Original Err: %v", value.Id, key, err)
 		}
 	}
+
+	// for i := range championData {
+	// 	err = mongo.UpdateChampionData(championData[i])
+	// 	if err != nil {
+	// 		fmt.Printf("Error updating championId:%v Original Err: %v", championData[i].Id, err)
+	// 	}
+	// }
 
 	return nil
 }

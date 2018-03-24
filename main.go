@@ -13,5 +13,6 @@ func main() {
 	go util.RegisterConsumer("dataApi/summoner", ConsumeSummonerInfo)
 	go util.RegisterConsumer("dataApi/summonerStats", ConsumeSummonerStats)
 	go util.RegisterConsumer("dataApi/matchReferenceData", ConsumeMatchReference)
+	go util.RegisterConsumer("dataApi/championData", ConsumeChampionData)
 	<-forever
 }

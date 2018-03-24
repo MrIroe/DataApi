@@ -98,7 +98,7 @@ func GetSummonerInfoAcc(accountId int64) ([]obj.SummonerDTO, error) {
 	return summonerInfo, nil
 }
 
-func UpdateChampionData(data obj.ChampionData) error {
+func UpdateChampionData(data obj.ChampionDTO) error {
 	localSess := *primarySess.Clone()
 	defer localSess.Close()
 	c := localSess.DB(entityDbName).C(championColName)

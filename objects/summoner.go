@@ -25,6 +25,7 @@ type SummonerDTO struct {
 
 type SummonerMatchStats struct {
 	AccountId  int64                  `json:"accountId" bson:"AccountId"`
+	Timestamp  int64                  `json:"timestamp" bson:"Timestamp"`
 	SeasonId   int                    `json:"seasonId" bson:"SeasonId"`
 	QueueId    int                    `json:"queueId" bson:"QueueId"`
 	MatchId    int64                  `json:"matchId" bson:"MatchId"`
